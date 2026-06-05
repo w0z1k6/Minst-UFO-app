@@ -1,0 +1,15 @@
+# Streamlit Cloud 会优先使用 environment.yml，从而固定 Python 3.11（TensorFlow 不支持 3.14）
+name: mnist-streamlit
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - streamlit>=1.28.0
+      - streamlit-drawable-canvas>=0.9.0
+      - tensorflow-cpu==2.16.1
+      - opencv-python-headless>=4.8.0
+      - numpy>=1.24.0,<2.0
+      - pandas>=2.0.0

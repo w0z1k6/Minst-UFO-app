@@ -12,7 +12,7 @@
 
 | 应用 | 入口文件 | 依赖文件 | 模型文件（必须进仓库） |
 |------|----------|----------|------------------------|
-| **MNIST** | `machine_learning_web_app/app.py` | `machine_learning_web_app/requirements.txt` | `machine_learning_web_app/mnist.hdf5`（约 1.6MB） |
+| **MNIST** | `machine_learning_web_app/app.py` | `machine_learning_web_app/environment.yml`（固定 Python 3.11） | `machine_learning_web_app/mnist.hdf5`（约 1.6MB） |
 | **UFO** | `ufo_project/app.py` | `ufo_project/requirements.txt` | `ufo_project/ufo-model.pkl` |
 
 本地已提供 **单体版** `app.py`（不依赖 FastAPI），适合云端一键运行。
@@ -38,7 +38,7 @@ cd "E:\SHU sem.8\机器学习\Week5_Practice"
 
 git init
 git add .gitignore
-git add machine_learning_web_app/app.py machine_learning_web_app/preprocess.py machine_learning_web_app/requirements.txt machine_learning_web_app/mnist.hdf5
+git add machine_learning_web_app/app.py machine_learning_web_app/preprocess.py machine_learning_web_app/environment.yml machine_learning_web_app/.python-version machine_learning_web_app/mnist.hdf5
 git add ufo_project/app.py ufo_project/requirements.txt ufo_project/ufo-model.pkl
 git add DEPLOY_STREAMLIT.md
 
@@ -103,19 +103,27 @@ UFO Sighting Predictor:  https://week5-ufo-xxx.streamlit.app/
 
 确认已 `git add machine_learning_web_app/mnist.hdf5` 并 push。
 
-### 2. MNIST 一直 “Running…” / 内存不足
+### 2. `Error installing requirements` / `tensorflow-cpu` / Python 3.14
+
+Streamlit 若使用 **Python 3.14**，TensorFlow 无法安装。本仓库已用 `environment.yml` 固定 **Python 3.11**。
+
+若仍报错，请 **删除该 App 后重新部署**，在 **Advanced settings** 里把 Python version 选为 **3.11**（不能改已部署 App 的 Python 版本）。
+
+参考：[Streamlit 论坛 - Python 3.14 与 TensorFlow](https://discuss.streamlit.io/t/streamlit-cloud-forcing-python-3-14-before-tensorflow-supports-it/121567)
+
+### 3. MNIST 一直 “Running…” / 内存不足
 
 Streamlit 免费 tier 内存有限；`tensorflow-cpu` 首次加载较慢，多等几分钟。若反复失败，可换时段重试或删掉 App 重新 Deploy。
 
-### 3. 画板组件报错
+### 4. 画板组件报错
 
-`requirements.txt` 中需包含 `streamlit-drawable-canvas`（MNIST 目录已配置）。
+`environment.yml` 中需包含 `streamlit-drawable-canvas`（已配置）。
 
-### 4. 想用 Gitee 而不是 GitHub
+### 5. 想用 Gitee 而不是 GitHub
 
 Streamlit Cloud **官方只支持 GitHub**。可先把 Gitee 镜像同步到 GitHub，再按上文部署。
 
-### 5. 本地前后端分离版（FastAPI + frontend）
+### 6. 本地前后端分离版（FastAPI + frontend）
 
 云端 **不推荐** 跑两个服务；作业展示用 **`app.py` 单体版** 即可。本地仍可用 `backend.py` + `frontend.py` 演示架构。
 
@@ -144,7 +152,8 @@ Week5_Practice/
 │   ├── app.py                   ← MNIST 云端入口
 │   ├── preprocess.py
 │   ├── mnist.hdf5
-│   └── requirements.txt
+│   ├── environment.yml
+│   └── .python-version
 └── ufo_project/
     ├── app.py                   ← UFO 云端入口
     ├── ufo-model.pkl
