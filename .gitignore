@@ -1,0 +1,13 @@
+.venv/
+venv/
+**/__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# 本地大文件/缓存（模型文件需要提交，不要忽略）
+machine_learning_web_app/html files/
